@@ -40,12 +40,12 @@ class CallbackController extends Controller
     //             'success' => true,
     //             'message' => 'Notification successfully processed',
     //         ]);
-        // } else {
-        //     return response()
-        //         ->json([
-        //             'error' => true,
-        //             'message' => 'Signature key not verified',
-        //         ], 403);
-        // }
+    //     // } else {
+    //     //     return response()
+    //     //         ->json([
+    //     //             'error' => true,
+    //     //             'message' => 'Signature key not verified',
+    //     //         ], 403);
+    //     // }
     // }
 }

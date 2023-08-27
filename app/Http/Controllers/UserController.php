@@ -14,10 +14,10 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // $users = User::paginate(5);
-        $users = DB::table('users')
-            ->when($request->input('search'), function ($query, $search) {
+        $users = User::when($request->input('search'), function ($query, $search) {
                 $query->where('name', 'like', '%' . $search . '%');
-            })->paginate(5);
+                $query->orderBy('id', 'desc');
+            })->paginate(10);
         return view('pages.user.index', compact('users'));
     }
 
