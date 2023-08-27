@@ -12,7 +12,6 @@ class OrderController extends Controller
 {
     public function order(Request $request)
     {
-        dd($request->quantity);
         $order = Order::create([
             'user_id' => $request->user()->id,
             'seller_id' => $request->seller_id,
