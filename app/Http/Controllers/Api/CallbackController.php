@@ -11,34 +11,8 @@ use App\Services\Midtrans\CallbackService;
 
 class CallbackController extends Controller
 {
-
-    // public function __construct()
-    // {
-    //     $callback = new CallbackService;
-    //     $this->notification = $callback->getNotification();
-    //     $this->order = $callback->getOrder();
-    //     $this->orderItem  = Order::where('number', $this->order->number)->with('orderItems')->with('orderItems.product')->get();
-    //     $this->serverKey = config('midtrans.server_key');
-    // }
-    // private function _createLocalsignatureKey()
-    // {
-    //     $total = new Collection();
-    //     foreach ($this->orderItem[0]->orderItems as $item) {
-    //         $total->push([
-    //             'total' => $item->product->price * $item->quantity,
-    //         ]);
-    //     }
-    //     $orderId = $this->order->number;
-    //     $statusCode = $this->notification->status_code;
-    //     $grossAmount = number_format($total->sum('total'), 2, '.', '');
-    //     $serverkey = $this->serverKey;
-    //     $input = $orderId . $statusCode . $grossAmount . $serverkey;
-    //     $signature = openssl_digest($input, 'sha512');
-    //     return $signature;
-    // }
     public function callback()
     {
-        // $sign = $this->_createLocalsignatureKey();
         $callback = new CallbackService;
         if ($callback->isSignatureKeyVerified()) {
             $notification = $callback->getNotification();
