@@ -8,15 +8,19 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+        $this->authorizeResource(User::class, 'user');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         // $users = User::paginate(5);
-        $users = User::when($request->input('search'), function ($query, $search) {
+        $users = User::orderBy('id', 'desc')->when($request->input('search'), function ($query, $search) {
                 $query->where('name', 'like', '%' . $search . '%');
-                $query->orderBy('id', 'desc');
             })->paginate(10);
         return view('pages.user.index', compact('users'));
     }
