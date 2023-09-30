@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -22,7 +26,7 @@ class ProductController extends Controller
         )->when(
             $userId,
             fn ($query, $userId) => $query->where('user_id', '=', $userId)
-        )->paginate()->load('category', 'user');
+        )->orderBy('created_at', 'desc')->paginate()->load('category', 'user');
 
         return ProductResource::collection($products);
     }
@@ -40,7 +44,7 @@ class ProductController extends Controller
                 'image_url' => 'required',
                 'category_id' => 'required',
             ]),
-            'user_id' => 1,
+            'user_id' => $request->user()->id,
         ]);
 
         return $product;
