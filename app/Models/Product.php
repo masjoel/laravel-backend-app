@@ -11,7 +11,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
 
     public function category()
     {
@@ -28,7 +28,7 @@ class Product extends Model
     }
     public function scopeCategoryId(Builder $query, string $categoryId): Builder
     {
-        return $query->where('category_id', 'LIKE', '%' . $categoryId . '%');
+        return $query->where('category_id', '=', $categoryId);
     }
-
+    
 }

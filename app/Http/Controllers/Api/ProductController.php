@@ -15,12 +15,16 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $categoryId = $request->input('category_id');
+        $userId = $request->input('user_id');
         $products = Product::when(
             $categoryId,
             fn ($query, $categoryId) => $query->categoryId($categoryId)
-        )->paginate()->load('category');
+        )->when(
+            $userId,
+            fn ($query, $userId) => $query->where('user_id', '=', $userId)
+        )->paginate()->load('category', 'user');
+
         return ProductResource::collection($products);
-        // return ProductResource::collection(Product::paginate(10));
     }
 
     /**
