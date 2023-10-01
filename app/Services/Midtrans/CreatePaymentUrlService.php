@@ -32,9 +32,9 @@ class CreatePaymentUrlService extends Midtrans
         }
         $item_details->push([
             'id' => 'Fee001',
-            'price' => 22000,
+            'price' => $order->shipping_cost,
             'quantity' => 1,
-            'name' => 'Shipping Cost',
+            'name' => $order->shipper.' shipping cost',
         ]);
 
         $params = [
