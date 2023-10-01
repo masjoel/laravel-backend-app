@@ -30,6 +30,12 @@ class CreatePaymentUrlService extends Midtrans
                 'name' => $product->name,
             ]);
         }
+        $item_details->push([
+            'id' => 'Fee001',
+            'price' => 22000,
+            'quantity' => 1,
+            'name' => 'Shipping Cost',
+        ]);
 
         $params = [
             'transaction_details' => [
