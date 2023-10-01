@@ -19,6 +19,8 @@ class OrderController extends Controller
             'total_price' => $request->total_price,
             'payment_status' => 1,
             'delivery_address' => $request->delivery_address,
+            'shipper' => $request->shipper,
+            'shipping_cost' => $request->shipping_cost,
         ]);
 
         foreach ($request->items as $item) {
