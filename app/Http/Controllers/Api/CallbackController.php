@@ -21,7 +21,7 @@ class CallbackController extends Controller
         $token = $user->fcm_token;
 
         $messaging = app('firebase.messaging');
-        $notification = Notification::create('Order telah diibayar', $message);
+        $notification = Notification::create('Order telah dibayar', $message);
 
         $message = CloudMessage::withTarget('token', $token)
             ->withNotification($notification);
@@ -39,6 +39,7 @@ class CallbackController extends Controller
                 Order::where('id', $order->id)->update([
                     'payment_status' => 2,
                 ]);
+                $this->sendNotificationToUser($order->seller_id, 'Pembayaran Order ' . number_format($order->total_price) . ' sukses');
             }
 
             if ($callback->isExpire()) {
@@ -53,7 +54,6 @@ class CallbackController extends Controller
                 ]);
             }
 
-            $this->sendNotificationToUser($order->seller_id, 'Pembayaran Order ' . $order->total_price . ' Sukses');
 
             return response()
                 ->json([
