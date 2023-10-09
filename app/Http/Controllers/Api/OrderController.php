@@ -47,7 +47,7 @@ class OrderController extends Controller
             ]);
         }
 
-        $this->sendNotificationToUser($request->seller_id, 'Order ' . $request->total_price . ' masuk, Menunggu pembayaran');
+        $this->sendNotificationToUser($request->seller_id, 'Order ' . number_format($request->total_price) . ' masuk, menunggu pembayaran');
         $midtrans = new CreatePaymentUrlService();
         $paymentUrl = $midtrans->getPaymentUrl($order->load('user', 'orderItems'));
 
