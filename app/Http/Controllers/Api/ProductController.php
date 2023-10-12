@@ -21,6 +21,7 @@ class ProductController extends Controller
         $categoryId = $request->input('category_id');
         $userId = $request->input('user_id');
         $namaProduct = $request->input('search');
+        $limit = $request->input('limit', 12);
         $products = Product::when(
             $categoryId,
             fn ($query, $categoryId) => $query->categoryId($categoryId)
@@ -30,7 +31,7 @@ class ProductController extends Controller
         )->when(
             $namaProduct,
             fn ($query, $namaProduct) => $query->where('name', 'like', '%' . $namaProduct . '%')
-        )->orderBy('created_at', 'desc')->paginate()->load('category', 'user');
+        )->orderBy('created_at', 'desc')->paginate($limit)->load('category', 'user');
 
         return ProductResource::collection($products);
     }
