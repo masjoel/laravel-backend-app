@@ -20,12 +20,16 @@ class ProductController extends Controller
     {
         $categoryId = $request->input('category_id');
         $userId = $request->input('user_id');
+        $namaProduct = $request->input('search');
         $products = Product::when(
             $categoryId,
             fn ($query, $categoryId) => $query->categoryId($categoryId)
         )->when(
             $userId,
             fn ($query, $userId) => $query->where('user_id', '=', $userId)
+        )->when(
+            $namaProduct,
+            fn ($query, $namaProduct) => $query->where('name', 'like', '%' . $namaProduct . '%')
         )->orderBy('created_at', 'desc')->paginate()->load('category', 'user');
 
         return ProductResource::collection($products);
