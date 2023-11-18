@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use App\Services\Midtrans\CreatePaymentUrlService;
@@ -57,5 +58,21 @@ class OrderController extends Controller
         return response()->json([
             'data' => $order
         ]);
+    }
+    public function orderById(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        $seller_id = $request->input('seller_id');
+
+        $order = Order::when(
+            $user_id,
+            fn ($query, $user_id) => $query->where('user_id', '=', $user_id)
+        )->when(
+            $seller_id,
+            fn ($query, $seller_id) => $query->where('seller_id', '=', $seller_id)
+        )->get();
+        $order->load('orderItems', 'user');
+
+        return new OrderResource($order);
     }
 }
