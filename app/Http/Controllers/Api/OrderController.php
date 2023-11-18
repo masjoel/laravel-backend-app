@@ -73,9 +73,9 @@ class OrderController extends Controller
         )->when(
             $payment_status,
             fn ($query, $payment_status) => $query->where('payment_status', '=', $payment_status)
-        )->get();
+        )
+            ->get();
         $order->load('orderItems', 'user');
-
         return new OrderResource($order);
     }
 }
