@@ -61,9 +61,8 @@ class OrderController extends Controller
     }
     public function orderById(Request $request)
     {
-        $user_id = $request->input('user_id');
-        $seller_id = $request->input('seller_id');
-
+        $user_id = $request->query('user_id');
+        $seller_id = $request->query('seller_id');
         $order = Order::when(
             $user_id,
             fn ($query, $user_id) => $query->where('user_id', '=', $user_id)
