@@ -75,7 +75,7 @@ class OrderController extends Controller
             fn ($query, $payment_status) => $query->where('payment_status', '=', $payment_status)
         )
             ->get();
-        $order->load('orderItems', 'user');
+        // $order->load('orderItems', 'user');
         return new OrderResource($order);
     }
 }
